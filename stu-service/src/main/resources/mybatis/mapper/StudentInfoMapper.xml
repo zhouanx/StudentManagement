@@ -7,7 +7,7 @@
     <result column="sgender" property="sgender" jdbcType="VARCHAR" />
     <result column="sage" property="sage" jdbcType="INTEGER" />
     <result column="saddress" property="saddress" jdbcType="VARCHAR" />
-    <result column="semall" property="semall" jdbcType="VARCHAR" />
+    <result column="semail" property="semail" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -68,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    sid, sname, sgender, sage, saddress, semall
+    sid, sname, sgender, sage, saddress, semail
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.kgc.stu.bean.StudentInfoExample" >
     select
@@ -102,10 +102,10 @@
   </delete>
   <insert id="insert" parameterType="com.kgc.stu.bean.StudentInfo" >
     insert into studentinfo (sid, sname, sgender, 
-      sage, saddress, semall
+      sage, saddress, semail
       )
     values (#{sid,jdbcType=INTEGER}, #{sname,jdbcType=VARCHAR}, #{sgender,jdbcType=VARCHAR}, 
-      #{sage,jdbcType=INTEGER}, #{saddress,jdbcType=VARCHAR}, #{semall,jdbcType=VARCHAR}
+      #{sage,jdbcType=INTEGER}, #{saddress,jdbcType=VARCHAR}, #{semail,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.kgc.stu.bean.StudentInfo" >
@@ -126,8 +126,8 @@
       <if test="saddress != null" >
         saddress,
       </if>
-      <if test="semall != null" >
-        semall,
+      <if test="semail != null" >
+        semail,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -146,8 +146,8 @@
       <if test="saddress != null" >
         #{saddress,jdbcType=VARCHAR},
       </if>
-      <if test="semall != null" >
-        #{semall,jdbcType=VARCHAR},
+      <if test="semail != null" >
+        #{semail,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -175,8 +175,8 @@
       <if test="record.saddress != null" >
         saddress = #{record.saddress,jdbcType=VARCHAR},
       </if>
-      <if test="record.semall != null" >
-        semall = #{record.semall,jdbcType=VARCHAR},
+      <if test="record.semail != null" >
+        semail = #{record.semail,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -190,7 +190,7 @@
       sgender = #{record.sgender,jdbcType=VARCHAR},
       sage = #{record.sage,jdbcType=INTEGER},
       saddress = #{record.saddress,jdbcType=VARCHAR},
-      semall = #{record.semall,jdbcType=VARCHAR}
+      semail = #{record.semail,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -210,8 +210,8 @@
       <if test="saddress != null" >
         saddress = #{saddress,jdbcType=VARCHAR},
       </if>
-      <if test="semall != null" >
-        semall = #{semall,jdbcType=VARCHAR},
+      <if test="semail != null" >
+        semail = #{semail,jdbcType=VARCHAR},
       </if>
     </set>
     where sid = #{sid,jdbcType=INTEGER}
@@ -222,7 +222,7 @@
       sgender = #{sgender,jdbcType=VARCHAR},
       sage = #{sage,jdbcType=INTEGER},
       saddress = #{saddress,jdbcType=VARCHAR},
-      semall = #{semall,jdbcType=VARCHAR}
+      semail = #{semail,jdbcType=VARCHAR}
     where sid = #{sid,jdbcType=INTEGER}
   </update>
 </mapper>

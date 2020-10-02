@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div id="vuebox">
+            <!--图书列表-->
+            <div class="row">
+                <div class="col-md-12">
+                    <br/>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>编号</th>
+                            <th>姓名</th>
+                            <th>性别</th>
+                            <th>年龄</th>
+                            <th>住址</th>
+                            <th>Email</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="item in stulist">
+                            <td><a href="javascript:void(0)" @click="onEdit(item.sid)">{{item.sid}}</a></td>
+                            <td>{{item.sname}}</td>
+                            <td>{{item.sgender}}</td>
+                            <td>{{item.sage}}</td>
+                            <td>{{item.saddress}}</td>
+                            <td>{{item.semail}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <br/>
+                </div>
+            </div>
+            <!-- 添加模态框-->
+            <div class="modal fade" id="AddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title" id="myModalLabel">添加</h4>
+                        </div>
+                        <div class="modal-body">
+<!--                            <label>分类:</label><select class="form-control" v-model="student.categoryid">-->
+<!--                            <option value="0">全部</option>-->
+<!--                            <option v-for="item in categorylist.data" :value="item.id">{{item.name}}</option>-->
+<!--                        </select>-->
+                            <label>姓名:</label><input type="text" class="form-control" v-model="student.sname"/><br/>
+                            <label>年龄:</label><input type="text" class="form-control" v-model="student.sage"/><br/>
+                            <label>性别:</label>
+                            <select v-model="student.sgender">
+                                <option value="男">男</option>
+                                <option value="女">女</option>
+                            </select><br/>
+                            <label>家庭住址:</label><input type="text" class="form-control" v-model="student.saddress"/><br/>
+                            <label>Email:</label><input type="text" class="form-control" v-model="student.semail"/><br/>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" >关闭</button>
+                            <a href="#" class="btn btn-primary" @click="saveStu()">提交更改</a>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+<script type="text/javascript">
+    var vm=new Vue({
+        el:"#vuebox",
+        data:{
+            stulist:[],
+            student:{sid:null,sname:null,sgender:"男",sage:0,saddress:null,semail:null}
+        },mounted() {
+            this.queryAll();
+        },methods:{
+            queryAll:function () {
+                axios({url:"/stu/list", method:"post",
+                    params:{}})
+                    .then(res=>{
+                        this.stulist=res.data})
+            },
+            onEdit:function (id) {
+                axios({url:"/get/id", method:"post", params:{id:id}}).
+                then(res=>{this.student=res.data});
+                $("#AddModal").modal("show");
+                }
+            ,
+            saveStu:function () {
+                axios.post("/saveStu",this.student).then(res=>{
+                if (res.data>0){
+                    this.queryAll();
+                    alert("更新成功!");
+                    $("#AddModal").modal("hide");
+                    this.student={sid:null,sname:null,sgender:"男",sage:0,saddress:null,semail:null}
+                }else{
+                    alert("更新失败!");
+                }
+            });
+
+            }
+        }
+
+
+    })
+</script>

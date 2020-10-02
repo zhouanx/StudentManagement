@@ -13,7 +13,7 @@ public class StudentInfo implements Serializable {
 
     private String saddress;
 
-    private String semall;
+    private String semail;
 
     public Integer getSid() {
         return sid;
@@ -55,12 +55,12 @@ public class StudentInfo implements Serializable {
         this.saddress = saddress == null ? null : saddress.trim();
     }
 
-    public String getSemall() {
-        return semall;
+    public String getSemail() {
+        return semail;
     }
 
-    public void setSemall(String semall) {
-        this.semall = semall == null ? null : semall.trim();
+    public void setSemail(String semail) {
+        this.semail = semail;
     }
 
     @Override
@@ -71,7 +71,7 @@ public class StudentInfo implements Serializable {
                 ", sgender='" + sgender + '\'' +
                 ", sage=" + sage +
                 ", saddress='" + saddress + '\'' +
-                ", semall='" + semall + '\'' +
+                ", semail='" + semail + '\'' +
                 '}';
     }
 }

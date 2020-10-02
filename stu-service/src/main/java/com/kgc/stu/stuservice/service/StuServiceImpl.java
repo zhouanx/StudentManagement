@@ -93,6 +93,7 @@ public class StuServiceImpl implements StuService {
            Random random=new Random();
            int i = random.nextInt(10);
            Jedis jedis=redisUtil.getJedis();
+           jedis.del(stukey);
            jedis.setex(stukey,i*60*10,JSON.toJSONString(studentInfo));
        }
         return result;
@@ -102,7 +103,7 @@ public class StuServiceImpl implements StuService {
         List<StudentInfo> stulist=new ArrayList<>();
         SearchSourceBuilder searchSourceBuilder=new SearchSourceBuilder();
         BoolQueryBuilder boolQueryBuilder=new BoolQueryBuilder();
-        searchSourceBuilder.sort("sid", SortOrder.DESC);
+        searchSourceBuilder.sort("sid", SortOrder.ASC);
         String dsl=searchSourceBuilder.toString();
         Search search=new Search.Builder(dsl).addIndex("stu").addType("studentinfo").build();
         try {
